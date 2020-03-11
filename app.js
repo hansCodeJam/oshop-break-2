@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
+require('dotenv').config();
 const flash = require('connect-flash');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
@@ -11,15 +12,17 @@ const passport = require('passport');
 const methodOverride = require('method-override');
 require('./lib/passport');
 
+const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users/userRoutes');
 const adminRouter = require('./routes/admin/adminRoutes');
 const productRouter = require('./routes/admin/products/productRouter');
 const cartRouter = require('./routes/cart/cartRoutes');
 
-const getAllCategories = require('./route/admin/middleware/getAllCategories');
 const cartTotal = require('./routes/cart/middleware/cartTotal');
+
+const getAllCategories = require('./routes/admin/middleware/getAllCategories');
+
 const app = express();
-require('dotenv').config();
 
 mongoose
   .connect(process.env.MONGODB_URI, {
